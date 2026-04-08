@@ -154,19 +154,8 @@ if (process.env.NODE_ENV === "production" || process.env.VERCEL || DOMAIN) {
 
   const server = createServer(webhookCallback(bot, "http"));
 
-  server.listen(PORT, async () => {
+  server.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
-    if (DOMAIN) {
-      const normalizedDomain = DOMAIN.startsWith("http") ? DOMAIN : `https://${DOMAIN}`;
-      const webhookUrl = `${normalizedDomain.replace(/\/$/, "")}/`;
-      console.log(`Setting webhook to: ${webhookUrl}`);
-      try {
-        await bot.api.setWebhook(webhookUrl);
-        console.log("Webhook set successfully");
-      } catch (e) {
-        console.error("Failed to set webhook:", e.message);
-      }
-    }
   });
 } else {
   // Development: Use Long Polling
