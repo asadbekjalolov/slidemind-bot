@@ -1,7 +1,7 @@
 import { Bot, InlineKeyboard, GrammyError, HttpError, webhookCallback } from "grammy";
 import { createServer } from "http";
 
-const bot = new Bot("8365665338:AAH4UhL1VDBpOrFJSI8iBBKoqEkV6DYYLHk");
+const bot = new Bot(process.env.BOT_TOKEN || "8365665338:AAH4UhL1VDBpOrFJSI8iBBKoqEkV6DYYLHk");
 const CHANNEL_ID = "@slidemind";
 
 // Set the bot's command menu
@@ -21,7 +21,7 @@ async function isSubscribed(ctx) {
     ) {
       console.error(
         `CRITICAL ERROR: The bot cannot check member status in ${CHANNEL_ID}.\n` +
-          `Please add the bot as an ADMINISTRATOR to the channel ${CHANNEL_ID} to fix this.`,
+        `Please add the bot as an ADMINISTRATOR to the channel ${CHANNEL_ID} to fix this.`,
       );
     } else {
       console.error("Error checking subscription:", error);
@@ -35,13 +35,13 @@ bot.command("start", async (ctx) => {
 
   if (subscribed) {
     const keyboard = new InlineKeyboard()
-      .webApp("🚀 SlidesMind ilovasini ochish", "https://slidemind.uz/")
+      .webApp("🚀 Slidemind ilovasini ochish", "https://slidemind.uz/")
       .row()
       .url("🌐 Saytga o'tish", "https://slidemind.uz/");
 
     await ctx.reply(
       `<b>Xush kelibsiz, ${ctx.from.first_name}!</b> 👋\n\n` +
-      `✨ <b>SlidesMind</b> — bu sizning intellektual yordamchingiz!\n\n` +
+      `✨ <b>Slidemind</b> — bu sizning intellektual yordamchingiz!\n\n` +
       `Siz bu yerda:\n` +
       `• 🤖 <b>AI</b> yordamida slaydlar yaratishingiz\n` +
       `• 🎨 <b>Premium</b> dizaynlardan foydalanishingiz\n` +
@@ -67,7 +67,7 @@ bot.command("start", async (ctx) => {
 
     await ctx.reply(
       `<b>Assalomu alaykum, ${ctx.from.first_name}!</b> 😊\n\n` +
-      `Sizni <b>SlidesMind</b> botida ko'rganimizdan xursandmiz!\n\n` +
+      `Sizni <b>Slidemind</b> botida ko'rganimizdan xursandmiz!\n\n` +
       `⚠️ <b>Diqqat:</b> Botdan to'liq foydalanish uchun rasmiy kanalimizga a'zo bo'lishingiz lozim.\n\n` +
       `1️⃣ Pastdagi tugma orqali kanalga kiring\n` +
       `2️⃣ A'zo bo'lgach <b>"A'zolikni tekshirish"</b> tugmasini bosing\n\n` +
@@ -86,7 +86,7 @@ bot.callbackQuery("check_subscription", async (ctx) => {
 
   if (subscribed) {
     const keyboard = new InlineKeyboard()
-      .webApp("🚀 SlidesMind ilovasini ochish", "https://slidemind.uz/")
+      .webApp("🚀 Slidemind ilovasini ochish", "https://slidemind.uz/")
       .row()
       .url("🌐 Saytga o'tish", "https://slidemind.uz/");
 
@@ -111,7 +111,7 @@ bot.callbackQuery("check_subscription", async (ctx) => {
 
 bot.command("help", (ctx) => {
   ctx.reply(
-    `<b>📚 SlidesMind — Yo'riqnoma</b>\n\n` +
+    `<b>📚 Slidemind — Yo'riqnoma</b>\n\n` +
     `Ushbu bot orqali siz sun'iy intellekt yordamida professional taqdimotlar tayyorlashingiz mumkin.\n\n` +
     `<b>Asosiy buyruqlar:</b>\n` +
     `• /start — Botni ishga tushirish\n` +
@@ -151,7 +151,7 @@ const DOMAIN = process.env.DOMAIN; // Your deployment domain (e.g., https://my-b
 if (process.env.NODE_ENV === "production" || process.env.VERCEL || DOMAIN) {
   // Production: Use Webhooks (Serverless)
   console.log(`Starting in WEBHOOK mode on port ${PORT}`);
-  
+
   const server = createServer(webhookCallback(bot, "http"));
 
   server.listen(PORT, async () => {
