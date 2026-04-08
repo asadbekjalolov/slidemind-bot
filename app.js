@@ -146,7 +146,7 @@ bot.catch((err) => {
 // --- Serverless / Webhook Configuration ---
 
 const PORT = process.env.PORT || 3000;
-const DOMAIN = process.env.DOMAIN; // Your deployment domain (e.g., https://my-bot.zeabur.app)
+const DOMAIN = process.env.DOMAIN?.trim();
 
 if (process.env.NODE_ENV === "production" || process.env.VERCEL || DOMAIN) {
   // Production: Use Webhooks (Serverless)
@@ -157,9 +157,15 @@ if (process.env.NODE_ENV === "production" || process.env.VERCEL || DOMAIN) {
   server.listen(PORT, async () => {
     console.log(`Server listening on port ${PORT}`);
     if (DOMAIN) {
-      const webhookUrl = `${DOMAIN}/`; // Some platforms handle routing differently, often just root
+      const normalizedDomain = DOMAIN.startsWith("http") ? DOMAIN : `https://${DOMAIN}`;
+      const webhookUrl = `${normalizedDomain.replace(/\/$/, "")}/`;
       console.log(`Setting webhook to: ${webhookUrl}`);
-      await bot.api.setWebhook(webhookUrl);
+      try {
+        await bot.api.setWebhook(webhookUrl);
+        console.log("Webhook set successfully");
+      } catch (e) {
+        console.error("Failed to set webhook:", e.message);
+      }
     }
   });
 } else {
