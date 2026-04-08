@@ -1,7 +1,15 @@
-import { Bot, InlineKeyboard, GrammyError, HttpError, webhookCallback } from "grammy";
+import {
+  Bot,
+  InlineKeyboard,
+  GrammyError,
+  HttpError,
+  webhookCallback,
+} from "grammy";
 import { createServer } from "http";
 
-const bot = new Bot(process.env.BOT_TOKEN || "8365665338:AAH4UhL1VDBpOrFJSI8iBBKoqEkV6DYYLHk");
+const bot = new Bot(
+  process.env.BOT_TOKEN || "8365665338:AAH4UhL1VDBpOrFJSI8iBBKoqEkV6DYYLHk",
+);
 const CHANNEL_ID = "@slidemind";
 
 // Set the bot's command menu
@@ -21,7 +29,7 @@ async function isSubscribed(ctx) {
     ) {
       console.error(
         `CRITICAL ERROR: The bot cannot check member status in ${CHANNEL_ID}.\n` +
-        `Please add the bot as an ADMINISTRATOR to the channel ${CHANNEL_ID} to fix this.`,
+          `Please add the bot as an ADMINISTRATOR to the channel ${CHANNEL_ID} to fix this.`,
       );
     } else {
       console.error("Error checking subscription:", error);
@@ -41,13 +49,13 @@ bot.command("start", async (ctx) => {
 
     await ctx.reply(
       `<b>Xush kelibsiz, ${ctx.from.first_name}!</b> 👋\n\n` +
-      `✨ <b>Slidemind</b> — bu sizning intellektual yordamchingiz!\n\n` +
-      `Siz bu yerda:\n` +
-      `• 🤖 <b>AI</b> yordamida slaydlar yaratishingiz\n` +
-      `• 🎨 <b>Premium</b> dizaynlardan foydalanishingiz\n` +
-      `• 📄 <b>PPTX/PDF</b> formatida yuklab olishingiz mumkin\n\n` +
-      `💻 Bizning sayt: <a href="https://slidemind.uz">slidemind.uz</a>\n\n` +
-      `👇 Ilovani ishga tushirish uchun quyidagi tugmani bosing:`,
+        `✨ <b>Slidemind</b> — bu sizning intellektual yordamchingiz!\n\n` +
+        `Siz bu yerda:\n` +
+        `• 🤖 <b>AI</b> yordamida slaydlar yaratishingiz\n` +
+        `• 🎨 <b>Premium</b> dizaynlardan foydalanishingiz\n` +
+        `• 📄 <b>PPTX/PDF</b> formatida yuklab olishingiz mumkin\n\n` +
+        `💻 Bizning sayt: <a href="https://slidemind.uz">slidemind.uz</a>\n\n` +
+        `👇 Ilovani ishga tushirish uchun quyidagi tugmani bosing:`,
       {
         reply_markup: keyboard,
         parse_mode: "HTML",
@@ -67,11 +75,11 @@ bot.command("start", async (ctx) => {
 
     await ctx.reply(
       `<b>Assalomu alaykum, ${ctx.from.first_name}!</b> 😊\n\n` +
-      `Sizni <b>Slidemind</b> botida ko'rganimizdan xursandmiz!\n\n` +
-      `⚠️ <b>Diqqat:</b> Botdan to'liq foydalanish uchun rasmiy kanalimizga a'zo bo'lishingiz lozim.\n\n` +
-      `1️⃣ Pastdagi tugma orqali kanalga kiring\n` +
-      `2️⃣ A'zo bo'lgach <b>"A'zolikni tekshirish"</b> tugmasini bosing\n\n` +
-      `🌐 Saytimiz: <a href="https://slidemind.uz">slidemind.uz</a>`,
+        `Sizni <b>Slidemind</b> botida ko'rganimizdan xursandmiz!\n\n` +
+        `⚠️ <b>Diqqat:</b> Botdan to'liq foydalanish uchun rasmiy kanalimizga a'zo bo'lishingiz lozim.\n\n` +
+        `1️⃣ Pastdagi tugma orqali kanalga kiring\n` +
+        `2️⃣ A'zo bo'lgach <b>"A'zolikni tekshirish"</b> tugmasini bosing\n\n` +
+        `🌐 Saytimiz: <a href="https://slidemind.uz">slidemind.uz</a>`,
       {
         reply_markup: keyboard,
         parse_mode: "HTML",
@@ -92,9 +100,9 @@ bot.callbackQuery("check_subscription", async (ctx) => {
 
     await ctx.editMessageText(
       `<b>Tabriklaymiz!</b> 🎉\n\n` +
-      `Siz muvaffaqiyatli ro'yxatdan o'tdingiz. Endi barcha imkoniyatlar siz uchun ochiq! ✨\n\n` +
-      `💻 Bizning sayt: <a href="https://slidemind.uz">slidemind.uz</a>\n\n` +
-      `👇 Taqdimot yaratishni boshlash uchun quyidagi tugmani bosing:`,
+        `Siz muvaffaqiyatli ro'yxatdan o'tdingiz. Endi barcha imkoniyatlar siz uchun ochiq! ✨\n\n` +
+        `💻 Bizning sayt: <a href="https://slidemind.uz">slidemind.uz</a>\n\n` +
+        `👇 Taqdimot yaratishni boshlash uchun quyidagi tugmani bosing:`,
       {
         reply_markup: keyboard,
         parse_mode: "HTML",
@@ -112,19 +120,19 @@ bot.callbackQuery("check_subscription", async (ctx) => {
 bot.command("help", (ctx) => {
   ctx.reply(
     `<b>📚 Slidemind — Yo'riqnoma</b>\n\n` +
-    `Ushbu bot orqali siz sun'iy intellekt yordamida professional taqdimotlar tayyorlashingiz mumkin.\n\n` +
-    `<b>Asosiy buyruqlar:</b>\n` +
-    `• /start — Botni ishga tushirish\n` +
-    `• /help — Yordam olish\n\n` +
-    `<b>Imkoniyatlar:</b>\n` +
-    `• ✨ Tezkor slaydlar yaratish\n` +
-    `• 📊 Ma'lumotlarni vizuallash\n` +
-    `• 💾 Fayllarni eksport qilish\n\n` +
-    `🌐 Sayt: <a href="https://slidemind.uz">slidemind.uz</a>\n` +
-    `🆘 Qo'llab-quvvatlash: @Jamshidbek_Rasulov`,
+      `Ushbu bot orqali siz sun'iy intellekt yordamida professional taqdimotlar tayyorlashingiz mumkin.\n\n` +
+      `<b>Asosiy buyruqlar:</b>\n` +
+      `• /start — Botni ishga tushirish\n` +
+      `• /help — Yordam olish\n\n` +
+      `<b>Imkoniyatlar:</b>\n` +
+      `• ✨ Tezkor slaydlar yaratish\n` +
+      `• 📊 Ma'lumotlarni vizuallash\n` +
+      `• 💾 Fayllarni eksport qilish\n\n` +
+      `🌐 Sayt: <a href="https://slidemind.uz">slidemind.uz</a>\n` +
+      `🆘 Qo'llab-quvvatlash: @Jamshidbek_Rasulov`,
     {
       parse_mode: "HTML",
-      disable_web_page_preview: true
+      disable_web_page_preview: true,
     },
   );
 });
